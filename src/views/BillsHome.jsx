@@ -1,5 +1,8 @@
 import React from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
+import { Status } from "variables/bill-status.jsx";
+
 
 // reactstrap components
 import {
@@ -12,27 +15,20 @@ import {
   Col
 } from "reactstrap";
 
-class Tables extends React.Component {
+class BillsHome extends React.Component {
   constructor(props){
     super(props)
     this.state={
         data : [],
-        status : {
-          "1":"Introduced",
-          "2":"Pass",
-          "3":"Fail",
-          "4":"Veto",
-          "5":"In progress",
-        }
     }
+    // this.handleBillClick = this.handleBillClick.bind(this);
   }
-
 
   componentWillMount(){
     let self = this;
     axios.get("https://api.legiscan.com/?key=B36e51861aaf4e8d544f86c1ce66fe98&op=getMasterList&state=CA")
     .then(response => {
-      console.log(response.data.masterlist);
+      // console.log(response.data.masterlist[0]);
       self.setState({ data:response.data.masterlist});
 
     })
@@ -44,21 +40,23 @@ class Tables extends React.Component {
   render() {
 
     const CardList = ({ data }) => {
-      console.log(data);
+      // console.log(data);
       const cardsArray =  Object.keys(data).map(value => (
-        
-        
         
             <tbody>
               <tr key = {data[value].bill_id}>
-                <td>{data[value].number}</td>
+                <td><Link to={{
+                      pathname: '/bill',
+                      state: {
+                        id: data[value].bill_id
+                      } 
+                      }} >{data[value].number}</Link></td>
                 <td>{data[value].title}</td>
                 <td>{data[value].description}</td>
-                <td >{data[value].last_action}</td>
+                <td >{Status[data[value].status]}</td>
               </tr>
             </tbody>
-          
-  
+        
       ));
     
       return (
@@ -74,7 +72,7 @@ class Tables extends React.Component {
                 <th>Bill Number</th>
                 <th>Title</th>
                 <th>Description</th>
-                <th>Last Action</th>
+                <th>Status</th>
               </tr>
             </thead>
           {cardsArray}
@@ -101,4 +99,4 @@ class Tables extends React.Component {
   }
 }
 
-export default Tables;
+export default BillsHome;

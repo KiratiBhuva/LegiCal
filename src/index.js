@@ -25,8 +25,11 @@ import "bootstrap/dist/css/bootstrap.css";
 import "assets/scss/paper-dashboard.scss?v=1.1.0";
 import "assets/demo/demo.css";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
+import Login from './components/Login.jsx';
+import SignUp from './components/SignUp.jsx';
 
 import AdminLayout from "layouts/Admin.jsx";
+import Bills from "./views/Bill.jsx";
 
 const hist = createBrowserHistory();
 
@@ -34,6 +37,9 @@ ReactDOM.render(
   <Router history={hist}>
     <Switch>
       <Route path="/admin" render={props => <AdminLayout {...props} />} />
+      <Route path="/signup" exact component = {SignUp}/>
+      <Route path="/login" exact component={Login}/>
+      <Route path="/bill" render={props => <Bills {...props} />} />
       <Redirect to="/admin/dashboard" />
     </Switch>
   </Router>,

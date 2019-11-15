@@ -20,10 +20,11 @@ import Dashboard from "views/Dashboard.jsx";
 import Notifications from "views/Notifications.jsx";
 import Icons from "views/Icons.jsx";
 import Typography from "views/Typography.jsx";
-import TableList from "views/Tables.jsx";
+import BillsHome from "views/BillsHome.jsx";
 import Maps from "views/Map.jsx";
 import UserPage from "views/User.jsx";
 import UpgradeToPro from "views/Upgrade.jsx";
+import Bill from "views/Bill.jsx";
 
 var routes = [
   {
@@ -37,13 +38,13 @@ var routes = [
     path: "/bills",
     name: "Bills",
     icon: "nc-icon nc-paper",
-    component: TableList,
+    component: BillsHome,
     layout: "/admin"
   },
   {
     path: "/billtracking",
     name: "Bill Tracking",
-    icon: "nc-icon nc-sound-wave",
+    icon: "nc-icon nc-watch-time",
     component: Icons,
     layout: "/admin"
   },
@@ -68,7 +69,7 @@ var routes = [
     component: UserPage,
     layout: "/admin"
   },
-  
+
   {
     pro: true,
     path: "/upgrade",
