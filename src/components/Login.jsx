@@ -23,6 +23,7 @@ class Login extends Component {
     }
 
     handleSubmit(e){
+        let self = this;
         e.preventDefault();
         console.log("Call to page ");
         if(this.validateEmail() === true)
@@ -35,6 +36,22 @@ class Login extends Component {
                     }
                 let self = this;
                 console.log("User Data:" + JSON.stringify(data))
+                axios.post(config.API_URL+'/movies/store',data)
+                 .then(function (response) {
+                   console.log(response);
+                   if(response.data.success)
+                   {
+                     self.props.history.push('/customerdashboard');
+                   }
+                   else{
+                     self.setState({msgResult:false})
+                   }
+
+                 })
+                 .catch(function (error) {
+                   self.setState({msgResult:false})
+                   console.log(error);
+                 });
             }
             else
             {

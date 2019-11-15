@@ -1,8 +1,16 @@
 .register{
-    background-image: url('../img/legiCalBackDrop.jpg');
+
     /* background: -webkit-linear-gradient(left, #3931af, #00c6ff); */
-    margin-top: 3%;
+    /* margin-top: 3%; */
     padding: 3%;
+
+}
+.backDrop{
+  margin-top: 0px;
+  height: 715px;
+  width: 100%;
+  background-image: url('../img/legiCalBackDrop.jpg');
+  background-repeat: no-repeat !important;
 }
 .register-left{
     text-align: center;
@@ -22,6 +30,8 @@
     cursor: pointer;
 }
 .register-right{
+    top: 100px;
+    left: 12px;
     background: #f8f9fa;
     border-top-left-radius: 10% 50%;
     border-bottom-left-radius: 10% 50%;
