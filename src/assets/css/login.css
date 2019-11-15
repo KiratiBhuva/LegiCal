@@ -1,0 +1,106 @@
+@import url('https://fonts.googleapis.com/css?family=Numans');
+
+html, body{
+    height: 100%  !important;
+}
+
+.backgroundLogin{
+    background-image: url('../img/legiCalBackDrop.jpg');
+     /* height:-webkit-fill-available !important; */
+     height: 715px;
+     background-repeat: repeat-y !important;
+
+}
+
+/* .containerL{
+    height: 100%;
+    align-content: center;
+} */
+
+.container{
+    height: 100% !important;
+    align-content: center !important;
+}
+
+.cardL{
+    /* height: 370px !important; */
+    margin-top: 10% !important;
+    margin-bottom: auto !important;
+    width: 400px !important;
+    background-color: rgba(0,0,0,0.5) !important;
+}
+
+.social_icon span{
+    font-size: 60px !important;
+    margin-left: 10px !important;
+    color: #FFC312 !important;
+}
+
+.social_icon span:hover{
+    color: white;
+    cursor: pointer;
+}
+
+.card-header h3{
+    color: white;
+}
+
+.social_icon{
+    position: absolute !important;
+    right: 20px !important;
+    top: -45px !important;
+}
+
+.input-group-prepend span{
+    width: 50px;
+    background-color: #FFC312;
+    color: black;
+    border:0 !important;
+}
+
+input:focus{
+    outline: 0 0 0 0  !important;
+    box-shadow: 0 0 0 0 !important;
+
+}
+
+.remember{
+    color: white !important;
+}
+
+.remember input
+{
+    width: 20px !important;
+    height: 20px !important;
+    margin-left: 15px !important;
+    margin-right: 5px !important;
+}
+
+.login_btn{
+    color: black !important;
+    background-color: #FFC312 !important;
+    width: 100px !important;
+}
+
+.login_btn:hover{
+    color: black !important;
+    background-color: white !important;
+}
+
+.links{
+    color: white !important;
+}
+
+.links a{
+    margin-left: 4px !important;
+}
+
+.abc{
+ height: 100%;
+  width: 100%;
+  /* display: flex; */
+  justify-content: center;
+  align-items: center;
+  margin-left: 20% !important;
+
+}

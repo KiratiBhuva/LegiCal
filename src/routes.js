@@ -43,7 +43,7 @@ var routes = [
   {
     path: "/billtracking",
     name: "Bill Tracking",
-    icon: "nc-icon nc-sound-wave",
+    icon: "nc-icon nc-watch-time",
     component: Icons,
     layout: "/admin"
   },
@@ -68,7 +68,7 @@ var routes = [
     component: UserPage,
     layout: "/admin"
   },
-  
+
   {
     pro: true,
     path: "/upgrade",
