@@ -104,7 +104,7 @@ const dashboard24HoursPerformanceChart = {
   }
 };
 
-const dashboardEmailStatisticsChart = {
+const dashboardBillStatusChart = {
   data: canvas => {
     return {
       labels: [1, 2, 3],
@@ -213,8 +213,24 @@ const dashboardNASDAQChart = {
   }
 };
 
+const map = {
+
+    "1": "Introduced",
+    "2" : "Progress",
+"3" : "Completed",
+"4" : "Rejected",
+"5" : "Rejected1",
+"6" : "Rejected2"
+
+
+}
+
+
+
+
 module.exports = {
   dashboard24HoursPerformanceChart,
-  dashboardEmailStatisticsChart,
-  dashboardNASDAQChart
+  dashboardBillStatusChart,
+  dashboardNASDAQChart,
+  map
 };
