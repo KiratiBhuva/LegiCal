@@ -40,7 +40,7 @@
 
     .has-success &{
         border: 1px solid $table-line-color;
-        color: $font-color;
+        // color: $-color;
 
         &.form-control-success{
             padding-right: 2.5em !important;

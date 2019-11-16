@@ -29,7 +29,8 @@ import Login from './components/Login.jsx';
 import SignUp from './components/SignUp.jsx';
 
 import AdminLayout from "layouts/Admin.jsx";
-import Bills from "./views/Bill.jsx";
+import Bills from "./views/BillDetails/Bill.jsx";
+import SponserProfile from "views/BillDetails/SponserDetails/SponserProfile.jsx";
 
 const hist = createBrowserHistory();
 
@@ -40,6 +41,7 @@ ReactDOM.render(
       <Route path="/signup" exact component = {SignUp}/>
       <Route path="/login" exact component={Login}/>
       <Route path="/bill" render={props => <Bills {...props} />} />
+      <Route path="/sponser" render={props => <SponserProfile {...props} />} />
       <Redirect to="/admin/dashboard" />
     </Switch>
   </Router>,

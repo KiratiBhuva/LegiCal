@@ -24,7 +24,7 @@ import BillsHome from "views/BillsHome.jsx";
 import Maps from "views/Map.jsx";
 import UserPage from "views/User.jsx";
 import UpgradeToPro from "views/Upgrade.jsx";
-import Bill from "views/Bill.jsx";
+import Bill from "views/BillDetails/Bill.jsx";
 
 var routes = [
   {
