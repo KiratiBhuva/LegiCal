@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 class StatusInfo extends React.Component {
     
@@ -9,7 +10,12 @@ class StatusInfo extends React.Component {
         <div>
             <h6>{ }</h6>
             <h6> Status </h6>
-            <p> Text: </p> 
+            <p  className ="d-inline"> Text: <Link to={{
+            pathname: "/billtext",
+            state: {
+                id: data.bill_id
+            }
+        }} >Get the full text here</Link> </p>
         </div>
     );
   }

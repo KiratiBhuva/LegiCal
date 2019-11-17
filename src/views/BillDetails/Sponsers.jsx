@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 class Sponsers extends React.Component {
     
   render() {
-    let style ={display:"inline"}
     let data = this.props.data;
     const sponsersArray = Object.keys(data).map(value => (
         <Badge color="dark" style={{margin:5}}><Link style={{color:'#fffafa', font:17 }} to={{

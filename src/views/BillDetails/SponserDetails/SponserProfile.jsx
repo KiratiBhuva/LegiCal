@@ -37,7 +37,7 @@ class SponserProfile extends React.Component {
         }
         this.mainPanel = React.createRef();
       }
-    
+
       componentDidMount () {
   
         if (navigator.platform.indexOf("Win") > -1) {
@@ -49,9 +49,9 @@ class SponserProfile extends React.Component {
         console.log("Id pass from bills page - Sponser Id ", id);
 
         let self = this;
-            axios.get(" https://api.legiscan.com/?key=c1609cbe5fe798fbe73cf6bd46a779dd&op=getBill&id=" + id )
+            axios.get(" https://api.legiscan.com/?key=c1609cbe5fe798fbe73cf6bd46a779dd&op=getPerson&id=" + id )
             .then(response => {
-            console.log(response.data.bill);
+            console.log("Sponserer details: " + JSON.stringify(response.data.person));
             self.setState(
                 { data:response.data.bill });
         
@@ -91,9 +91,6 @@ class SponserProfile extends React.Component {
            />
            <div className="main-panel" ref={this.mainPanel}>
              <DemoNavbar {...this.props} />
-
-             {/*  Added by Kirati - Start */}
-
               <div className="content">
                 <Card>
                   <CardHeader>
@@ -103,7 +100,6 @@ class SponserProfile extends React.Component {
                     </CardBody>
                 </Card>
               </div>
-             {/* End */}
              <Footer fluid />
            </div>
          </div>
