@@ -39,6 +39,7 @@ class Dashboard extends React.Component {
 
   componentWillMount(){
     let self = this;
+    // Get the all sessions
     axios.get('https://api.legiscan.com/?key=B36e51861aaf4e8d544f86c1ce66fe98&op=getSessionList&state=CA')
      .then(function (response) {
        self.setState({sessionCount: response.data.sessions.length});
@@ -47,6 +48,7 @@ class Dashboard extends React.Component {
        console.log(error);
      });
 
+     // Get all legislators
      axios.get("https://openstates.org/api/v1/legislators/?state=ca&apikey=0b3bdc5b-e32b-4093-ae43-10d9f926fd62")
      .then(function(response){
        let legs= response.data;
@@ -71,9 +73,45 @@ class Dashboard extends React.Component {
      .catch(function(error){
        console.log(error);
      })
+
+     //get the bills master list
+     axios.get("https://api.legiscan.com/?key=B36e51861aaf4e8d544f86c1ce66fe98&op=getMasterList&state=CA")
+     .then(function(response){
+       //console.log(response.data.masterlist);
+       let currentYear = (new Date()).getYear();
+       let masterList = response.data.masterlist;
+       let ppm = {0:0,1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0,9:0,10:0,11:0};
+       for(var key in masterList){
+         var myDate = new Date(masterList[key].status_date);
+         let status = masterList[key].status;
+         var month = myDate.getMonth();
+         var year = myDate.getYear();
+         if(year == currentYear && status == "4"){
+
+           if(ppm[month]){
+             ppm[month]++
+           } else{
+             ppm[month] = 1;
+           }
+
+         }
+       }
+       var list =[];
+       Object.keys(ppm).forEach(month=>{
+         list.push(ppm[month]);
+      });
+      dashboardNASDAQChart.data.datasets[0].data = ppm;
+     })
+     .catch(function(error){
+       console.log(error);
+     });
+
+     //get the state metadata
+
   }
 
   render() {
+
 
     let org = {
     "statusCode": 200,
@@ -476,7 +514,8 @@ class Dashboard extends React.Component {
     }, {});
 
     var countsExtended = Object.keys(counts).map(k => {
-    return {status: k, count: counts[k]}; });
+      return {status: k, count: counts[k]};
+    });
     var countArray = [];
 
     countsExtended.map((ce) =>{
@@ -545,6 +584,7 @@ class Dashboard extends React.Component {
         }
       }
     };
+
     return (
       <>
         <div className="content">
@@ -613,7 +653,7 @@ class Dashboard extends React.Component {
                     <Col md="8" xs="7">
                       <div className="numbers">
                         <p className="card-category">Republicans</p>
-                        <CardTitle tag="p">+{this.state.republicans}</CardTitle>
+                        <CardTitle tag="p">{this.state.republicans}</CardTitle>
                         <p />
                       </div>
                     </Col>
@@ -639,7 +679,7 @@ class Dashboard extends React.Component {
                     <Col md="8" xs="7">
                       <div className="numbers">
                         <p className="card-category">Democrats</p>
-                        <CardTitle tag="p">+{this.state.demacrats}</CardTitle>
+                        <CardTitle tag="p">{this.state.demacrats}</CardTitle>
                         <p />
                       </div>
                     </Col>
@@ -658,8 +698,8 @@ class Dashboard extends React.Component {
             <Col md="12">
               <Card>
                 <CardHeader>
-                  <CardTitle tag="h5">Users Behavior</CardTitle>
-                  <p className="card-category">24 Hours performance</p>
+                  <CardTitle tag="h5">Monthly Expenditures in Last 3 Years</CardTitle>
+                  {/*<p className="card-category">24 Hours performance</p>*/}
                 </CardHeader>
                 <CardBody>
                   <Line
@@ -670,9 +710,15 @@ class Dashboard extends React.Component {
                   />
                 </CardBody>
                 <CardFooter>
+
+                  <div className="chart-legend">
+                    <i className="fa fa-circle text-info" /> 2019 Expenditures{" "}
+                    <i className="fa fa-circle text-warning" /> 2018 Expenditures{" "}
+                    <i className="fa fa-circle text-success" /> 2017 Expenditures{" "}
+                  </div>
                   <hr />
                   <div className="stats">
-                    <i className="fa fa-history" /> Updated 3 minutes ago
+                    <i className="fa fa-history" /> Updated 3 days ago
                   </div>
                 </CardFooter>
               </Card>
@@ -708,8 +754,8 @@ class Dashboard extends React.Component {
             <Col md="8">
               <Card className="card-chart">
                 <CardHeader>
-                  <CardTitle tag="h5">NASDAQ: AAPL</CardTitle>
-                  <p className="card-category">Line Chart with Points</p>
+                  <CardTitle tag="h5">Number of bills passed per month this year</CardTitle>
+                  <p className="card-category">{(new Date()).toString()}</p>
                 </CardHeader>
                 <CardBody>
                   <Line
@@ -721,8 +767,8 @@ class Dashboard extends React.Component {
                 </CardBody>
                 <CardFooter>
                   <div className="chart-legend">
-                    <i className="fa fa-circle text-info" /> Tesla Model S{" "}
-                    <i className="fa fa-circle text-warning" /> BMW 5 Series
+                    <i className="fa fa-circle text-info" /> California State Legislature Data{" "}
+                    {/*<i className="fa fa-circle text-warning" /> BMW 5 Series */}
                   </div>
                   <hr />
                   <div className="card-stats">
