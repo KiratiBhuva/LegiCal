@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 // javascript plugin used to create scrollbars on windows
 import PerfectScrollbar from "perfect-scrollbar";
 import { Route, Switch } from "react-router-dom";
-import { atob } from "atob";
-// import {decode as atob, encode as btoa} from 'base-64';
+// import { atob } from "atob";
+import {decode as atob, encode as btoa} from 'base-64';
 import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
 
 import DemoNavbar from "components/Navbars/DemoNavbar.jsx";
@@ -64,7 +64,6 @@ class BillText extends React.Component {
         .catch(error => {
           console.log(error);
         });
-
     }
 
     componentWillUnmount() {
@@ -108,9 +107,9 @@ class BillText extends React.Component {
                   <CardHeader>
                     <CardTitle tag="h4" className="float-left">Bill Text</CardTitle>
                   </CardHeader>
-                  <CardBody>
-                    {window.atob(this.state.data)}
-                  </CardBody>
+                  <CardBody md="12">
+                    {ReactHtmlParser(atob(this.state.data))}
+                 </CardBody>
                 </Card>
 
               </div>
