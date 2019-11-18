@@ -4,6 +4,12 @@ import login from "../assets/css/signup.css";
 import config from '../config.js';
 import axios from 'axios';
 //axios.defaults.withCredentials = true;
+import NotificationAlert from "react-notification-alert";
+// reactstrap components
+import {
+  Alert,
+	Button
+} from "reactstrap";
 
 class SignUp extends Component {
 
@@ -40,7 +46,46 @@ class SignUp extends Component {
     goToLogin(){
       this.props.history.push('/login')
     }
+    notificationAlert = React.createRef();
+    notifySuccess(place) {
+    	var type = "success";
+    	var options = {};
+    	options = {
+    		place: place,
+    		message: (
+    			<div>
+    				<div>
+    					Welcome to <b>LegiCal</b> - you are now signed up !
+    				</div>
+    			</div>
+    		),
+    		type: type,
+    		icon: "nc-icon nc-bell-55",
+    		autoDismiss: 7
+    	};
+    	this.notificationAlert.current.notificationAlert(options);
+    }
+
+    notifyError(place) {
+    	var type = "danger";
+    	var options = {};
+    	options = {
+    		place: place,
+    		message: (
+    			<div>
+    				<div>
+    					<b> Sorry!</b> Something went wrong. Try again.
+    				</div>
+    			</div>
+    		),
+    		type: type,
+    		icon: "nc-icon nc-bell-55",
+    		autoDismiss: 7
+    	};
+    	this.notificationAlert.current.notificationAlert(options);
+    }
     register(e){
+      let self = this;
       e.preventDefault();
       this.setState({
         organizationName: this.refs.organizationName.value,
@@ -52,14 +97,17 @@ class SignUp extends Component {
                    console.log(response);
                    if(response.data.statusCode == 200)
                    {
+                     self.notifySuccess("tl");
                      console.log("success");
                    }
                    else{
+                     self.notifyError("tl");
                     console.log("fail");
                    }
 
                  })
                 .catch(function (error) {
+                   self.notifyError("tl");
                    console.log(error);
                 });
 
@@ -139,7 +187,7 @@ class SignUp extends Component {
                                         </div>
                                         <div className="form-group">
                                             <input type="password" className="form-control" placeholder="Password *" ref="password" />
-                                        </div> 
+                                        </div>
                                         <div className="form-group">
                                             <input type="password" className="form-control"  placeholder="Confirm Password *" ref="password" />
                                         </div>*/}
@@ -190,6 +238,7 @@ class SignUp extends Component {
                 </div>
 
             </div>
+             <NotificationAlert ref={this.notificationAlert} />
           </div>
         );
     }
