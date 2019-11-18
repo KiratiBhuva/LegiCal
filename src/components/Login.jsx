@@ -41,7 +41,12 @@ class Login extends Component {
                    console.log(response);
                    if(response.data.statusCode == 200)
                    {
+
                        console.log("Logion successfull");
+                       sessionStorage.setItem("user", JSON.stringify(response.data.user));
+                       sessionStorage.setItem("org", JSON.stringify(response.data.org));
+                       self.props.history.push('/ admin/dashboard');
+
                    }
                    else{
                     console.log("Logion unsuccessfull");
@@ -134,7 +139,7 @@ class Login extends Component {
                         </div>
                         <div className="card-footer">
                             <div className="d-flex justify-content-center links">
-                                Don't have an account?<a href="signup">Register</a>
+                                Don't have an account?<a href="user_signup">Register</a>
                             </div>
                             <div className="d-flex justify-content-center">
                                 <a href="signup">Forgot your password?</a>

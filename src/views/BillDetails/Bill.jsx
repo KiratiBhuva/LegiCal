@@ -2,10 +2,8 @@ import React from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { Status } from "variables/bills-variables.jsx";
-// javascript plugin used to create scrollbars on windows
 import PerfectScrollbar from "perfect-scrollbar";
 import { Route, Switch } from "react-router-dom";
-
 import DemoNavbar from "components/Navbars/DemoNavbar.jsx";
 import Footer from "components/Footer/Footer.jsx";
 import Sidebar from "components/Sidebar/Sidebar.jsx";
@@ -14,7 +12,6 @@ import History from "./BillHistory.jsx";
 import Rollcall from "./Rollcall.jsx";
 import Sponsers from "./Sponsers.jsx";
 import StatusInfo from "./StatusInfo.jsx";
-
 import {
   Card,
   CardHeader,
@@ -30,13 +27,15 @@ import routes from "routes.js";
 
 var ps;
 
+let serverURL = 'http://localhost:5000/';
 class Bills extends React.Component {
     constructor(props){
       super(props);
       const { id } = this.props.location.state
       this.state={
           data : [],
-          id: this.props.location.state,
+          id: this.props.location.state.id,
+          bill: this.props.location.state.bill,
           backgroundColor: "black",
           activeColor: "info",
           watchListMsg: "Add to watchList",
@@ -58,7 +57,29 @@ class Bills extends React.Component {
     }
 
     saveToWatchList() {
+      let user = JSON.parse(sessionStorage.user);
+      let payload = {
+          email : user.email,
+          bill: this.state.bill
+      }
+      console.log("Payload", payload);
       this.setState({watchListMsg: "Added To WatchList", addToWatchListBtn:true});
+      axios.post(serverURL + 'user/watchlist/create',payload)
+                .then(function (response) {
+                   console.log(response);
+                   if(response.data.statusCode == 200)
+                   {
+                     console.log("success");
+                   }
+                   else{
+                    console.log("fail");
+                   }
+
+                 })
+                .catch(function (error) {
+                   console.log(error);
+       });
+
     }
   
     componentDidMount () {

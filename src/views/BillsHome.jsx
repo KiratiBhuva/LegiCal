@@ -20,37 +20,36 @@ class BillsHome extends React.Component {
   constructor(props){
     super(props)
     this.state={
-        data : [],
-        isLoaded : false,
+        data : sessionStorage.org.bills
     }
     // this.handleBillClick = this.handleBillClick.bind(this);
   }
 
-  componentWillMount(){
-    let self = this;
-    axios.get("https://api.legiscan.com/?key=B36e51861aaf4e8d544f86c1ce66fe98&op=getMasterList&state=CA")
-    .then(response => {
-      console.log(response.data.masterlist);
-      self.setState({isLoaded : true, data:response.data.masterlist});
+  // componentWillMount(){
+  //   let self = this;
+  //   axios.get("https://api.legiscan.com/?key=B36e51861aaf4e8d544f86c1ce66fe98&op=getMasterList&state=CA")
+  //   .then(response => {
+  //     console.log(response.data.masterlist);
+  //     self.setState({isLoaded : true, data:response.data.masterlist});
 
-    })
-    .catch(error => {
-      console.log(error);
-    });
-  }
+  //   })
+  //   .catch(error => {
+  //     console.log(error);
+  //   });
+  // }
   
   render() {
 
     const CardList = ({ data }) => {
-      console.log(data);
-      const cardsArray =  Object.keys(data).map(value => (
+      const cardsArray = Object.keys(data).map(value => (
         
             <tbody>
               <tr key = {data[value].bill_id}>
                 <td><Link to={{
                           pathname: "/bill",
                           state: {
-                            id: data[value].bill_id
+                            id: data[value].bill_id,
+                            bill: data[value]
                           }
                 }}>{data[value].number}</Link></td>
                 <td>{data[value].title}</td>
@@ -68,7 +67,7 @@ class BillsHome extends React.Component {
               <CardTitle tag="h4">Bills</CardTitle>
             </CardHeader>
            <CardBody>
-           {this.state.isLoaded ?  <Table responsive>
+           { true ? <Table responsive>
                 <thead className="text-primary">
                   <tr>
                     <th>Bill Number</th>
@@ -85,12 +84,13 @@ class BillsHome extends React.Component {
       );
     };
 
+    let org = JSON.parse(sessionStorage.org);
     return (
       
         <div className="content">
           <Row>
             <Col md="12">
-              <CardList data={this.state.data} />
+              <CardList data={org.bills} />
             </Col>
           </Row>
         </div>
