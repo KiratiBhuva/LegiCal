@@ -109,7 +109,7 @@ class BillText extends React.Component {
                     <CardTitle tag="h4" className="float-left">Bill Text</CardTitle>
                   </CardHeader>
                   <CardBody>
-                    {window.atob(this.state.data)}
+                   <div dangerouslySetInnerHTML= {{ __html: window.atob(this.state.data) }} />
                   </CardBody>
                 </Card>
 
