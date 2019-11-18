@@ -27,6 +27,7 @@ import "assets/demo/demo.css";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
 import Login from './components/Login.jsx';
 import SignUp from './components/SignUp.jsx';
+import UserSignUp from './components/UserSignUp.jsx';
 
 import AdminLayout from "layouts/Admin.jsx";
 
@@ -37,6 +38,7 @@ ReactDOM.render(
     <Switch>
       <Route path="/admin" render={props => <AdminLayout {...props} />} />
       <Route path="/signup" exact component = {SignUp}/>
+      <Route path="/user_signup/:id" exact component = {UserSignUp}/>
       <Route path="/login" exact component={Login}/>
       <Redirect to="/admin/dashboard" />
     </Switch>

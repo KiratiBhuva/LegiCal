@@ -3,7 +3,7 @@ import {withRouter} from 'react-router-dom';
 import login from "../assets/css/login.css";
 import config from '../config.js';
 import axios from 'axios';
-
+let serverURL = 'http://localhost:5000/';
 
 class Login extends Component {
 
@@ -36,14 +36,15 @@ class Login extends Component {
                     }
                 let self = this;
                 console.log("User Data:" + JSON.stringify(data))
-                axios.post(config.API_URL+'/movies/store',data)
+                axios.post(serverURL+'user/login',data)
                  .then(function (response) {
                    console.log(response);
-                   if(response.data.success)
+                   if(response.data.statusCode == 200)
                    {
-                     self.props.history.push('/customerdashboard');
+                       console.log("Logion successfull");
                    }
                    else{
+                    console.log("Logion unsuccessfull");
                      self.setState({msgResult:false})
                    }
 
@@ -60,7 +61,6 @@ class Login extends Component {
         }
         else
         {
-            //this.state.usernameValid = false;
             this.setState({emailorusernameValid: false})
         }
     }
