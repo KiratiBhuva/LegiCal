@@ -2,6 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Badge } from "reactstrap";
 import { Link } from "react-router-dom";
+import {
+  Alert,
+} from "reactstrap";
 
 class Sponsers extends React.Component {
     
@@ -19,7 +22,9 @@ class Sponsers extends React.Component {
         <div className ="d-inline" >
             <h6> Sponsers </h6>
             <div  className ="d-inline">
-                {sponsersArray}
+            {this.props.data.length !== 0  ? sponsersArray : <Alert color="warning">
+                                            No Sponsers Available.
+                                              </Alert>}
             </div>
         </div>
     );

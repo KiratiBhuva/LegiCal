@@ -12,6 +12,7 @@ import History from "./BillHistory.jsx";
 import Rollcall from "./Rollcall.jsx";
 import Sponsers from "./Sponsers.jsx";
 import StatusInfo from "./StatusInfo.jsx";
+import Comments from "./Comments.jsx";
 import {
   Card,
   CardHeader,
@@ -20,7 +21,8 @@ import {
   Table,
   Row,
   Col,
-  button
+  button,
+  Input
 } from "reactstrap";
 
 import routes from "routes.js";
@@ -50,10 +52,44 @@ class Bills extends React.Component {
           session: [],
           sponsors: [],
           texts: [],
-          votes: []
+          votes: [],
+          comment : "",
+          comments : [],
       }
       this.mainPanel = React.createRef();
       this.saveToWatchList = this.saveToWatchList.bind(this);
+      this.handlecomment = this.handlecomment.bind(this);
+      this.addComment = this.addComment.bind(this);
+    }
+    handlecomment(e) {
+      this.setState({comment: e.target.value});
+    }
+
+    addComment() {
+
+      let payload = {
+        orgId : "", 
+        userId : "",
+        comment : this.state.comment
+      }
+      if(payload.comment) {
+        console.log("Payload", payload);
+      //   axios.post(serverURL + 'user/watchlist/create',payload)
+      //           .then(function (response) {
+      //              console.log(response);
+      //              if(response.data.statusCode == 200)
+      //              {
+      //                console.log("success");
+      //              }
+      //              else{
+      //               console.log("fail");
+      //              }
+
+      //            })
+      //           .catch(function (error) {
+      //              console.log(error);
+      //  });
+      }
     }
 
     saveToWatchList() {
@@ -115,6 +151,18 @@ class Bills extends React.Component {
         .catch(error => {
           console.log(error);
         });
+
+
+        // axios.get(" https://api.legiscan.com/?key=c1609cbe5fe798fbe73cf6bd46a779dd&op=getBill&id=" + id )
+        // .then(response => {
+        //   console.log("Comments : " , response.data);
+        //   self.setState(
+        //     { comments :response.data.comments,
+        //     });
+        // })
+        // .catch(error => {
+        //   console.log(error);
+        // });
 
     }
 
@@ -181,6 +229,25 @@ class Bills extends React.Component {
                 
                 <History data={this.state.history} />
 
+                {/* Comment Section */}
+
+                <div>
+                  
+                </div>
+
+                <Card>
+                  <CardHeader>
+                    <CardTitle tag="h4" className="float-left"> Comments </CardTitle>
+                  </CardHeader>
+                  <CardBody>
+                    <Row  className="clearfix">
+                      <Col xs="9"><Input type="text" name="billcomment" id="billcomment" placeholder="Add your comment here" onChange={this.handlecomment}/></Col>
+                      <Col xs="3"><button className="btn btn-danger float-right" onClick={this.addComment}><i className="nc-icon nc-chat-33" />   Post Comment</button></Col>
+                      <div style={{margin : 20}}> {''}</div>
+                    </Row>
+                    <Comments data = {this.state.comments} />
+                  </CardBody>
+                </Card>
               </div>
              {/* End */}
              <Footer fluid />

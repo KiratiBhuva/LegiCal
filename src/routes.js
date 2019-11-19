@@ -25,6 +25,8 @@ import Maps from "views/Map.jsx";
 import UserPage from "views/User.jsx";
 import UpgradeToPro from "views/Upgrade.jsx";
 import Bill from "views/BillDetails/Bill.jsx";
+import BillSearch from "views/BillSearch.jsx";
+import BillPreference from "views/BillPreference.jsx";
 
 var routes = [
   {
@@ -52,14 +54,14 @@ var routes = [
     path: "/preferences",
     name: "My Preferences",
     icon: "nc-icon nc-settings",
-    component: Icons,
+    component: BillPreference,
     layout: "/admin"
   },
   {
     path: "/search",
     name: "Search",
     icon: "nc-icon nc-zoom-split",
-    component: Notifications,
+    component: BillSearch,
     layout: "/admin"
   },
   {
