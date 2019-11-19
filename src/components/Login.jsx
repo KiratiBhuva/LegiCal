@@ -3,7 +3,7 @@ import {withRouter} from 'react-router-dom';
 import login from "../assets/css/login.css";
 import config from '../config.js';
 import axios from 'axios';
-
+let serverURL = 'http://localhost:5000/';
 
 class Login extends Component {
 
@@ -36,14 +36,20 @@ class Login extends Component {
                     }
                 let self = this;
                 console.log("User Data:" + JSON.stringify(data))
-                axios.post(config.API_URL+'/movies/store',data)
+                axios.post(serverURL+'user/login',data)
                  .then(function (response) {
                    console.log(response);
-                   if(response.data.success)
+                   if(response.data.statusCode == 200)
                    {
-                     self.props.history.push('/customerdashboard');
+
+                       console.log("Logion successfull");
+                       sessionStorage.setItem("user", JSON.stringify(response.data.user));
+                       sessionStorage.setItem("org", JSON.stringify(response.data.org));
+                       self.props.history.push('/ admin/dashboard');
+
                    }
                    else{
+                    console.log("Logion unsuccessfull");
                      self.setState({msgResult:false})
                    }
 
@@ -60,7 +66,6 @@ class Login extends Component {
         }
         else
         {
-            //this.state.usernameValid = false;
             this.setState({emailorusernameValid: false})
         }
     }
@@ -134,7 +139,7 @@ class Login extends Component {
                         </div>
                         <div className="card-footer">
                             <div className="d-flex justify-content-center links">
-                                Don't have an account?<a href="signup">Register</a>
+                                Don't have an account?<a href="user_signup">Register</a>
                             </div>
                             <div className="d-flex justify-content-center">
                                 <a href="signup">Forgot your password?</a>

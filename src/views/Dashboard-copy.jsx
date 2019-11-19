@@ -1,10 +1,24 @@
+/*!
+
+=========================================================
+* Paper Dashboard React - v1.1.0
+=========================================================
+
+* Product Page: https://www.creative-tim.com/product/paper-dashboard-react
+* Copyright 2019 Creative Tim (https://www.creative-tim.com)
+
+* Licensed under MIT (https://github.com/creativetimofficial/paper-dashboard-react/blob/master/LICENSE.md)
+
+* Coded by Creative Tim
+
+=========================================================
+
+* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+*/
 import React from "react";
 // react plugin used to create charts
 import { Line, Pie } from "react-chartjs-2";
-import '../../node_modules/react-vis/dist/style.css';
-import {XYPlot, LineSeries} from 'react-vis';
-import axios from 'axios';
-
 // reactstrap components
 import {
   Card,
@@ -28,90 +42,9 @@ class Dashboard extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      sessionCount:"",
-      legislatorCount:"",
-      senatarCount:"",
-      republicans:"",
-      demacrats:""
-    };
-  }
-
-  componentWillMount(){
-    let self = this;
-    // Get the all sessions
-    axios.get('https://api.legiscan.com/?key=B36e51861aaf4e8d544f86c1ce66fe98&op=getSessionList&state=CA')
-     .then(function (response) {
-       self.setState({sessionCount: response.data.sessions.length});
-     })
-     .catch(function (error) {
-       console.log(error);
-     });
-
-     // Get all legislators
-     axios.get("https://openstates.org/api/v1/legislators/?state=ca&apikey=0b3bdc5b-e32b-4093-ae43-10d9f926fd62")
-     .then(function(response){
-       let legs= response.data;
-
-       let rCount = 0;
-       let dCount = 0;
-       for(var item in legs){
-         if(legs[item].party == "Democratic"){
-           dCount++;
-         }
-
-         if(legs[item].party == "Republican"){
-           rCount++;
-         }
-       }
-       self.setState({
-         legislatorCount: response.data.length,
-         republicans:rCount,
-         demacrats:dCount
-      })
-     })
-     .catch(function(error){
-       console.log(error);
-     })
-
-     //get the bills master list
-     axios.get("https://api.legiscan.com/?key=B36e51861aaf4e8d544f86c1ce66fe98&op=getMasterList&state=CA")
-     .then(function(response){
-       //console.log(response.data.masterlist);
-       let currentYear = (new Date()).getYear();
-       let masterList = response.data.masterlist;
-       let ppm = {0:0,1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0,9:0,10:0,11:0};
-       for(var key in masterList){
-         var myDate = new Date(masterList[key].status_date);
-         let status = masterList[key].status;
-         var month = myDate.getMonth();
-         var year = myDate.getYear();
-         if(year == currentYear && status == "4"){
-
-           if(ppm[month]){
-             ppm[month]++
-           } else{
-             ppm[month] = 1;
-           }
-
-         }
-       }
-       var list =[];
-       Object.keys(ppm).forEach(month=>{
-         list.push(ppm[month]);
-      });
-      dashboardNASDAQChart.data.datasets[0].data = ppm;
-     })
-     .catch(function(error){
-       console.log(error);
-     });
-
-     //get the state metadata
-
   }
 
   render() {
-
 
     let org = {
     "statusCode": 200,
@@ -502,7 +435,7 @@ class Dashboard extends React.Component {
 
 
     }
-
+    console.log(org.org.bills);
     var counts = org.org.bills.reduce((p, c) => {
       var status = c.status;
       status = map[status];
@@ -514,76 +447,21 @@ class Dashboard extends React.Component {
     }, {});
 
     var countsExtended = Object.keys(counts).map(k => {
-      return {status: k, count: counts[k]};
-    });
+    return {status: k, count: counts[k]}; });
     var countArray = [];
-
+    var statuses = [];
     countsExtended.map((ce) =>{
         countArray.push(ce.count);
+        statuses.push(ce.status);
       }
     );
-    const dashboardBillStatusChart = {
-      data: canvas => {
-        return {
-          labels: [1, 2, 3],
-          datasets: [
-            {
-              label: "Emails",
-              pointRadius: 0,
-              pointHoverRadius: 0,
-              backgroundColor: ["#e3e3e3", "#4acccd", "#fcc468", "#ef8157"],
-              borderWidth: 0,
-              // data: [342, 480, 530, 120]
-              data: countArray
-            }
-          ]
-        };
-      },
-      options: {
-        legend: {
-          display: false
-        },
 
-        pieceLabel: {
-          render: "percentage",
-          fontColor: ["white"],
-          precision: 2
-        },
 
-        tooltips: {
-          enabled: false
-        },
+    console.log(countArray);
+    console.log(statuses);
+    
 
-        scales: {
-          yAxes: [
-            {
-              ticks: {
-                display: false
-              },
-              gridLines: {
-                drawBorder: false,
-                zeroLineColor: "transparent",
-                color: "rgba(255,255,255,0.05)"
-              }
-            }
-          ],
 
-          xAxes: [
-            {
-              barPercentage: 1.6,
-              gridLines: {
-                drawBorder: false,
-                color: "rgba(255,255,255,0.1)",
-                zeroLineColor: "transparent"
-              },
-              ticks: {
-                display: false
-              }
-            }
-          ]
-        }
-      }
-    };
 
     return (
       <>
@@ -595,13 +473,13 @@ class Dashboard extends React.Component {
                   <Row>
                     <Col md="4" xs="5">
                       <div className="icon-big text-center icon-warning">
-                        <i className="nc-icon nc-calendar-60 text-warning" />
+                        <i className="nc-icon nc-globe text-warning" />
                       </div>
                     </Col>
                     <Col md="8" xs="7">
                       <div className="numbers">
-                        <p className="card-category">Sessions</p>
-                        <CardTitle tag="p">{this.state.sessionCount}</CardTitle>
+                        <p className="card-category">Capacity</p>
+                        <CardTitle tag="p">150GB</CardTitle>
                         <p />
                       </div>
                     </Col>
@@ -621,13 +499,13 @@ class Dashboard extends React.Component {
                   <Row>
                     <Col md="4" xs="5">
                       <div className="icon-big text-center icon-warning">
-                        <i className="nc-icon nc-circle-10 text-success" />
+                        <i className="nc-icon nc-money-coins text-success" />
                       </div>
                     </Col>
                     <Col md="8" xs="7">
                       <div className="numbers">
-                        <p className="card-category">Legislators</p>
-                        <CardTitle tag="p">{this.state.legislatorCount}</CardTitle>
+                        <p className="card-category">Revenue</p>
+                        <CardTitle tag="p">$ 1,345</CardTitle>
                         <p />
                       </div>
                     </Col>
@@ -647,13 +525,13 @@ class Dashboard extends React.Component {
                   <Row>
                     <Col md="4" xs="5">
                       <div className="icon-big text-center icon-warning">
-                        <i className="nc-icon nc-tie-bow text-danger" />
+                        <i className="nc-icon nc-vector text-danger" />
                       </div>
                     </Col>
                     <Col md="8" xs="7">
                       <div className="numbers">
-                        <p className="card-category">Republicans</p>
-                        <CardTitle tag="p">{this.state.republicans}</CardTitle>
+                        <p className="card-category">Errors</p>
+                        <CardTitle tag="p">23</CardTitle>
                         <p />
                       </div>
                     </Col>
@@ -673,13 +551,13 @@ class Dashboard extends React.Component {
                   <Row>
                     <Col md="4" xs="5">
                       <div className="icon-big text-center icon-warning">
-                        <i className="nc-icon nc-glasses-2 text-primary" />
+                        <i className="nc-icon nc-favourite-28 text-primary" />
                       </div>
                     </Col>
                     <Col md="8" xs="7">
                       <div className="numbers">
-                        <p className="card-category">Democrats</p>
-                        <CardTitle tag="p">{this.state.demacrats}</CardTitle>
+                        <p className="card-category">Followers</p>
+                        <CardTitle tag="p">+45K</CardTitle>
                         <p />
                       </div>
                     </Col>
@@ -698,8 +576,8 @@ class Dashboard extends React.Component {
             <Col md="12">
               <Card>
                 <CardHeader>
-                  <CardTitle tag="h5">Monthly Expenditures in Last 3 Years</CardTitle>
-                  {/*<p className="card-category">24 Hours performance</p>*/}
+                  <CardTitle tag="h5">Users Behavior</CardTitle>
+                  <p className="card-category">24 Hours performance</p>
                 </CardHeader>
                 <CardBody>
                   <Line
@@ -710,15 +588,9 @@ class Dashboard extends React.Component {
                   />
                 </CardBody>
                 <CardFooter>
-
-                  <div className="chart-legend">
-                    <i className="fa fa-circle text-info" /> 2019 Expenditures{" "}
-                    <i className="fa fa-circle text-warning" /> 2018 Expenditures{" "}
-                    <i className="fa fa-circle text-success" /> 2017 Expenditures{" "}
-                  </div>
                   <hr />
                   <div className="stats">
-                    <i className="fa fa-history" /> Updated 3 days ago
+                    <i className="fa fa-history" /> Updated 3 minutes ago
                   </div>
                 </CardFooter>
               </Card>
@@ -739,10 +611,10 @@ class Dashboard extends React.Component {
                 </CardBody>
                 <CardFooter>
                   <div className="legend">
-                    <i className="fa fa-circle text-primary" /> Introduced{" "}
-                    <i className="fa fa-circle text-warning" /> Failed{" "}
-                    <i className="fa fa-circle text-danger" /> Progress{" "}
-                    <i className="fa fa-circle text-gray" /> Vetoed
+                    <i className="fa fa-circle text-primary" /> Opened{" "}
+                    <i className="fa fa-circle text-warning" /> Read{" "}
+                    <i className="fa fa-circle text-danger" /> Deleted{" "}
+                    <i className="fa fa-circle text-gray" /> Unopened
                   </div>
                   <hr />
                   <div className="stats">
@@ -754,8 +626,8 @@ class Dashboard extends React.Component {
             <Col md="8">
               <Card className="card-chart">
                 <CardHeader>
-                  <CardTitle tag="h5">Number of bills passed per month this year</CardTitle>
-                  <p className="card-category">{(new Date()).toString()}</p>
+                  <CardTitle tag="h5">NASDAQ: AAPL</CardTitle>
+                  <p className="card-category">Line Chart with Points</p>
                 </CardHeader>
                 <CardBody>
                   <Line
@@ -767,8 +639,8 @@ class Dashboard extends React.Component {
                 </CardBody>
                 <CardFooter>
                   <div className="chart-legend">
-                    <i className="fa fa-circle text-info" /> California State Legislature Data{" "}
-                    {/*<i className="fa fa-circle text-warning" /> BMW 5 Series */}
+                    <i className="fa fa-circle text-info" /> Tesla Model S{" "}
+                    <i className="fa fa-circle text-warning" /> BMW 5 Series
                   </div>
                   <hr />
                   <div className="card-stats">
@@ -780,7 +652,7 @@ class Dashboard extends React.Component {
           </Row>
         </div>
       </>
-    )
+    );
   }
 }
 

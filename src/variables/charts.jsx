@@ -29,7 +29,9 @@ const dashboard24HoursPerformanceChart = {
         "Jul",
         "Aug",
         "Sep",
-        "Oct"
+        "Oct",
+        "Nov",
+        "Dec"
       ],
       datasets: [
         {
@@ -38,15 +40,15 @@ const dashboard24HoursPerformanceChart = {
           pointRadius: 0,
           pointHoverRadius: 0,
           borderWidth: 3,
-          data: [300, 310, 316, 322, 330, 326, 333, 345, 338, 354]
+          data: [2504440, 2340000, 3444400, 2356744, 3475844, 4633866, 373883, 46733, 886564, 963765, 73485798, 450000]
         },
         {
-          borderColor: "#f17e5d",
-          backgroundColor: "#f17e5d",
+          borderColor: "#51bcda",
+          backgroundColor: "#51bcda",
           pointRadius: 0,
           pointHoverRadius: 0,
           borderWidth: 3,
-          data: [320, 340, 365, 360, 370, 385, 390, 384, 408, 420]
+          data: [3786868, 3404340, 365000, 3658500, 3707867, 3854657, 3909086, 38454657, 4085463, 4207585,676864, 464747]
         },
         {
           borderColor: "#fcc468",
@@ -54,7 +56,7 @@ const dashboard24HoursPerformanceChart = {
           pointRadius: 0,
           pointHoverRadius: 0,
           borderWidth: 3,
-          data: [370, 394, 415, 409, 425, 445, 460, 450, 478, 484]
+          data: [3704354, 394657, 4153354, 409000, 425000, 44589676, 4606575, 4505675, 4785464, 484959, 454644]
         }
       ]
     };
@@ -65,7 +67,7 @@ const dashboard24HoursPerformanceChart = {
     },
 
     tooltips: {
-      enabled: false
+      enabled: true
     },
 
     scales: {
@@ -192,16 +194,6 @@ const dashboardNASDAQChart = {
         pointRadius: 4,
         pointHoverRadius: 4,
         pointBorderWidth: 8
-      },
-      {
-        data: [0, 5, 10, 12, 20, 27, 30, 34, 42, 45, 55, 63],
-        fill: false,
-        borderColor: "#51CACF",
-        backgroundColor: "transparent",
-        pointBorderColor: "#51CACF",
-        pointRadius: 4,
-        pointHoverRadius: 4,
-        pointBorderWidth: 8
       }
     ]
   },
@@ -217,12 +209,10 @@ const map = {
 
     "1": "Introduced",
     "2" : "Progress",
-"3" : "Completed",
-"4" : "Rejected",
-"5" : "Rejected1",
-"6" : "Rejected2"
-
-
+    "3" : "Enrolled",
+    "4" : "Passed",
+    "5" : "Vetoed",
+    "6" : "Failed"
 }
 
 
