@@ -2,6 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Chamber, IsPass } from "variables/bills-variables.jsx";
 import { Link } from "react-router-dom";
+import {
+  Alert,
+} from "reactstrap";
 
 class Rollcall extends React.Component {
     
@@ -17,7 +20,9 @@ class Rollcall extends React.Component {
         <div>
             <h6> </h6>
             <h6> Roll Calls </h6>
-            {rollcallArray}
+            {this.props.data.length !== 0 ? rollcallArray : <Alert color="warning">
+                                            No Rollcall Records Available.
+                                              </Alert>  } 
         </div>
     );
   }

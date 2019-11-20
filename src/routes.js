@@ -17,14 +17,10 @@
 
 */
 import Dashboard from "views/Dashboard.jsx";
-import Notifications from "views/Notifications.jsx";
-import Icons from "views/Icons.jsx";
-import Typography from "views/Typography.jsx";
 import BillsHome from "views/BillsHome.jsx";
-import Maps from "views/Map.jsx";
-import UserPage from "views/User.jsx";
 import UpgradeToPro from "views/Upgrade.jsx";
 import Bill from "views/BillDetails/Bill.jsx";
+import BillSearch from "views/BillSearch.jsx";
 import SavedBills from "views/SavedBills.jsx";
 
 var routes = [
@@ -42,6 +38,7 @@ var routes = [
     component: BillsHome,
     layout: "/admin"
   },
+
   // {
   //   path: "/billtracking",
   //   name: "Bill Tracking",
@@ -60,17 +57,9 @@ var routes = [
     path: "/search",
     name: "Search",
     icon: "nc-icon nc-zoom-split",
-    component: Notifications,
+    component: BillSearch,
     layout: "/admin"
   },
-  {
-    path: "/senator-page",
-    name: "Senator Profile",
-    icon: "nc-icon nc-single-02",
-    component: UserPage,
-    layout: "/admin"
-  },
-
   {
     pro: true,
     path: "/upgrade",

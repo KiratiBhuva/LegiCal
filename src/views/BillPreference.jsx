@@ -16,7 +16,7 @@ import {
   Col
 } from "reactstrap";
 
-class BillsHome extends React.Component {
+class BillPreference extends React.Component {
   constructor(props){
     super(props)
     this.state={
@@ -100,4 +100,4 @@ class BillsHome extends React.Component {
   }
 }
 
-export default BillsHome;
+export default BillPreference;

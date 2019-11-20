@@ -5,6 +5,7 @@ import {
     CardHeader,
     CardBody,
     CardTitle,
+    Alert,
     Table,
     Row,
     Col
@@ -43,11 +44,14 @@ class BillHistory extends React.Component {
             <Card>
                 <CardBody>
                     <h6> History </h6>
+                    {this.props.data.length !== 0 ?
                     <Row>
                         <Col md="12">
                             <CardList data={this.props.data} />
                         </Col>
-                    </Row>
+                    </Row> : <Alert color="warning">
+                            No History Records Available.
+                              </Alert>  }
                 </CardBody>
             </Card>
         </div>

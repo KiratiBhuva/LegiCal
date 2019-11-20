@@ -101,13 +101,15 @@ class Header extends React.Component {
     });
   }
   getBrand() {
-    let brandName = "Default Brand";
+    let brandName = "";
     routes.map((prop, key) => {
       if (window.location.href.indexOf(prop.layout + prop.path) !== -1) {
         brandName = prop.name;
       }
       return null;
     });
+    let user = JSON.parse(sessionStorage.user).email;
+    brandName = 'Welcome, '+ user.split('@')[0];
     return brandName;
   }
   openSidebar() {
