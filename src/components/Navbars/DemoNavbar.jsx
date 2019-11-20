@@ -18,6 +18,11 @@
 */
 import React from "react";
 import { Link } from "react-router-dom";
+import NotificationAlert from "react-notification-alert";
+import {
+  Alert,
+	Button
+} from "reactstrap";
 import {
   Collapse,
   Navbar,
@@ -49,6 +54,32 @@ class Header extends React.Component {
     this.toggle = this.toggle.bind(this);
     this.dropdownToggle = this.dropdownToggle.bind(this);
     this.sidebarToggle = React.createRef();
+  }
+  notificationAlert = React.createRef();
+  notifySuccess(place) {
+    var type = "success";
+    var options = {};
+    options = {
+      place: place,
+      message: (
+        <div>
+          <div>
+            You are now logging off...
+          </div>
+        </div>
+      ),
+      type: type,
+      icon: "nc-icon nc-bell-55",
+      autoDismiss: 7
+    };
+    this.notificationAlert.current.notificationAlert(options);
+  }
+  logOut(){
+    this.notifySuccess("br");
+    sessionStorage.removeItem("user");
+    sessionStorage.removeItem("org");
+    setTimeout(()=>{this.props.history.push('/login');},2000);
+
   }
   toggle() {
     if (this.state.isOpen) {
@@ -151,53 +182,19 @@ class Header extends React.Component {
             navbar
             className="justify-content-end"
           >
-            <form>
-              <InputGroup className="no-border">
-                <Input placeholder="Search..." />
-                <InputGroupAddon addonType="append">
-                  <InputGroupText>
-                    <i className="nc-icon nc-zoom-split" />
-                  </InputGroupText>
-                </InputGroupAddon>
-              </InputGroup>
-            </form>
             <Nav navbar>
               <NavItem>
-                <Link to="#pablo" className="nav-link btn-magnify">
-                  <i className="nc-icon nc-layout-11" />
-                  <p>
-                    <span className="d-lg-none d-md-block">Stats</span>
-                  </p>
-                </Link>
-              </NavItem>
-              <Dropdown
-                nav
-                isOpen={this.state.dropdownOpen}
-                toggle={e => this.dropdownToggle(e)}
-              >
-                <DropdownToggle caret nav>
-                  <i className="nc-icon nc-bell-55" />
-                  <p>
-                    <span className="d-lg-none d-md-block">Some Actions</span>
-                  </p>
-                </DropdownToggle>
-                <DropdownMenu right>
-                  <DropdownItem tag="a">Action</DropdownItem>
-                  <DropdownItem tag="a">Another Action</DropdownItem>
-                  <DropdownItem tag="a">Something else here</DropdownItem>
-                </DropdownMenu>
-              </Dropdown>
-              <NavItem>
                 <Link to="#pablo" className="nav-link btn-rotate">
-                  <i className="nc-icon nc-settings-gear-65" />
+                  <i className="nc-icon nc-button-power"  onClick = {this.logOut.bind(this)}/>
                   <p>
-                    <span className="d-lg-none d-md-block">Account</span>
+                    <span className="d-lg-none d-md-block">User</span>
                   </p>
                 </Link>
               </NavItem>
             </Nav>
           </Collapse>
         </Container>
+        <NotificationAlert ref={this.notificationAlert} />
       </Navbar>
     );
   }

@@ -25,6 +25,7 @@ import Maps from "views/Map.jsx";
 import UserPage from "views/User.jsx";
 import UpgradeToPro from "views/Upgrade.jsx";
 import Bill from "views/BillDetails/Bill.jsx";
+import SavedBills from "views/SavedBills.jsx";
 
 var routes = [
   {
@@ -41,18 +42,18 @@ var routes = [
     component: BillsHome,
     layout: "/admin"
   },
-  {
-    path: "/billtracking",
-    name: "Bill Tracking",
-    icon: "nc-icon nc-watch-time",
-    component: Icons,
-    layout: "/admin"
-  },
+  // {
+  //   path: "/billtracking",
+  //   name: "Bill Tracking",
+  //   icon: "nc-icon nc-watch-time",
+  //   component: Icons,
+  //   layout: "/admin"
+  // },
   {
     path: "/preferences",
-    name: "My Preferences",
-    icon: "nc-icon nc-settings",
-    component: Icons,
+    name: "My Saved Bills",
+    icon: "nc-icon nc-bag-16",
+    component: SavedBills,
     layout: "/admin"
   },
   {

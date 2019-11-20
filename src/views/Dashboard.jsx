@@ -100,7 +100,8 @@ class Dashboard extends React.Component {
        Object.keys(ppm).forEach(month=>{
          list.push(ppm[month]);
       });
-      dashboardNASDAQChart.data.datasets[0].data = ppm;
+      dashboardNASDAQChart.data.datasets[0].data = list;
+      console.log(dashboardNASDAQChart);
      })
      .catch(function(error){
        console.log(error);
