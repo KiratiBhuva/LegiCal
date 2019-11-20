@@ -7,8 +7,6 @@ class StatusInfo extends React.Component {
     
   render() {
     let data = this.props.data;
-    console.log("Data on status info page: " + JSON.stringify(data));
-    console.log(data);
     return (
         <div>
             <h6>{ }</h6>

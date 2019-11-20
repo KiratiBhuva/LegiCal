@@ -66,29 +66,41 @@ class Bills extends React.Component {
     }
 
     addComment() {
-
-      let payload = {
-        orgId : "", 
-        userId : "",
+      let self = this;
+      let comment = {
+        uuid : JSON.parse(sessionStorage.getItem("org")).uuid, 
+        commentedby : JSON.parse(sessionStorage.getItem("user")).email,
         comment : this.state.comment
       }
+
+      let payload = {
+        comment: comment,
+        billId: this.state.id
+      }
+
+      let arr =[];
+      arr = this.state.comments.concat(comment);
+
       if(payload.comment) {
         console.log("Payload", payload);
-      //   axios.post(serverURL + 'user/watchlist/create',payload)
-      //           .then(function (response) {
-      //              console.log(response);
-      //              if(response.data.statusCode == 200)
-      //              {
-      //                console.log("success");
-      //              }
-      //              else{
-      //               console.log("fail");
-      //              }
+        axios.post(serverURL + 'user/addComment/',payload)
+                .then(function (response) {
+                   if(response.data.statusCode == 200)
+                   {
+                     self.setState({ 
+                        comments : arr
+                      }, () => {
+                      });
+                     
+                   }
+                   else{
+                    console.log("fail");
+                   }
 
-      //            })
-      //           .catch(function (error) {
-      //              console.log(error);
-      //  });
+                 })
+                .catch(function (error) {
+                   console.log(error);
+       });
       }
     }
 
@@ -98,11 +110,9 @@ class Bills extends React.Component {
           email : user.email,
           bill: this.state.bill
       }
-      console.log("Payload", payload);
       this.setState({watchListMsg: "Added To WatchList", addToWatchListBtn:true});
       axios.post(serverURL + 'user/watchlist/create',payload)
                 .then(function (response) {
-                   console.log(response);
                    if(response.data.statusCode == 200)
                    {
                      console.log("success");
@@ -118,6 +128,33 @@ class Bills extends React.Component {
 
     }
   
+
+  componentDidUpdate() {
+    let self = this;
+    if(this.state.id) {
+      let payload = {
+          billId : this.state.id
+        }
+        axios.post(serverURL + 'bill/getComments',payload)
+                .then(function (response) {
+                   if(response.data.statusCode == 200)
+                   {
+                      self.setState({ 
+                        comments :response.data.comments,
+                      });
+                   }
+                   else{
+                    console.log("fail");
+                   }
+
+                 })
+                .catch(function (error) {
+                   console.log(error);
+       });
+    }
+  }
+  
+
     componentDidMount () {
 
       if (navigator.platform.indexOf("Win") > -1) {
@@ -126,12 +163,10 @@ class Bills extends React.Component {
       }
 
       const { id } = this.props.location.state
-      console.log("Id passed from bills home", id);
 
       let self = this;
         axios.get(" https://api.legiscan.com/?key=c1609cbe5fe798fbe73cf6bd46a779dd&op=getBill&id=" + id )
         .then(response => {
-          console.log(response.data.bill);
           self.setState(
             { data:response.data.bill,
               session:response.data.bill.session,
@@ -152,17 +187,26 @@ class Bills extends React.Component {
           console.log(error);
         });
 
+        let payload = {
+          billId : id
+        }
+        axios.post(serverURL + 'bill/getComments',payload)
+                .then(function (response) {
+                   console.log(response);
+                   if(response.data.statusCode == 200)
+                   {
+                      self.setState({ 
+                        comments :response.data.comments,
+                      });
+                   }
+                   else{
+                    console.log("fail");
+                   }
 
-        // axios.get(" https://api.legiscan.com/?key=c1609cbe5fe798fbe73cf6bd46a779dd&op=getBill&id=" + id )
-        // .then(response => {
-        //   console.log("Comments : " , response.data);
-        //   self.setState(
-        //     { comments :response.data.comments,
-        //     });
-        // })
-        // .catch(error => {
-        //   console.log(error);
-        // });
+                 })
+                .catch(function (error) {
+                   console.log(error);
+       });
 
     }
 
