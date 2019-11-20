@@ -588,7 +588,7 @@ class Dashboard extends React.Component {
     return (
       <>
         <div className="content">
-          <Row>
+          {/* <Row>
             <Col lg="3" md="6" sm="6">
               <Card className="card-stats">
                 <CardBody>
@@ -700,7 +700,7 @@ class Dashboard extends React.Component {
                 <CardHeader>
                   <CardTitle tag="h5">Monthly Expenditures in Last 3 Years</CardTitle>
                   {/*<p className="card-category">24 Hours performance</p>*/}
-                </CardHeader>
+                {/* </CardHeader>
                 <CardBody>
                   <Line
                     data={dashboard24HoursPerformanceChart.data}
@@ -765,19 +765,19 @@ class Dashboard extends React.Component {
                     height={100}
                   />
                 </CardBody>
-                <CardFooter>
-                  <div className="chart-legend">
-                    <i className="fa fa-circle text-info" /> California State Legislature Data{" "}
-                    {/*<i className="fa fa-circle text-warning" /> BMW 5 Series */}
-                  </div>
-                  <hr />
-                  <div className="card-stats">
-                    <i className="fa fa-check" /> Data information certified
-                  </div>
-                </CardFooter>
-              </Card>
-            </Col>
-          </Row>
+          //       <CardFooter>
+          //         <div className="chart-legend">
+          //           <i className="fa fa-circle text-info" /> California State Legislature Data{" "} */}
+          //           {/*<i className="fa fa-circle text-warning" /> BMW 5 Series */}
+          //         {/* </div>
+          //         <hr />
+          //         <div className="card-stats">
+          //           <i className="fa fa-check" /> Data information certified
+          //         </div>
+          //       </CardFooter>
+          //     </Card>
+          //   </Col>
+          // </Row> */} 
         </div>
       </>
     )
