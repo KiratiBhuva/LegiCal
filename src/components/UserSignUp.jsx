@@ -90,14 +90,15 @@ notifyError(place) {
 
 render() {
 	console.log("ID",this.props.match.params.id);
-
+  let org = this.props.match.params.id;
 	return (
+
           <div className="backDrop">
             <div className="container register">
-            	 <div className="col-md-9 row register-right">
+            	 <div className="col-md-10 row register-right">
                         <div className="tab-content" id="myTabContent">
                             <div className="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                                <h3 className="register-heading">Register with your organization</h3>
+                                <h3 className="register-heading">Register with your organization <b>{org}</b></h3> 
                                 <div className="row register-form">
                                  <div className="col-md-6">
                                 	 	<div className="form-group">
