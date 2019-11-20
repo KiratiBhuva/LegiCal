@@ -7,6 +7,7 @@ import { Route, Switch } from "react-router-dom";
 // import { atob } from "atob";
 import {decode as atob, encode as btoa} from 'base-64';
 import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
+import Speech from "speak-tts";
 
 import DemoNavbar from "components/Navbars/DemoNavbar.jsx";
 import Footer from "components/Footer/Footer.jsx";
@@ -39,8 +40,10 @@ class BillText extends React.Component {
       const { id } = this.props.location.state
       this.state={
           data : "",
+          pause : false,
       }
       this.mainPanel = React.createRef();
+      this.textToSpeech = this.textToSpeech.bind(this);
     }
   
     componentDidMount () {
@@ -49,6 +52,8 @@ class BillText extends React.Component {
         ps = new PerfectScrollbar(this.mainPanel.current);
         document.body.classList.toggle("perfect-scrollbar-on");
       }
+
+      
 
       const { id } = this.props.location.state
       console.log("Id passed from bills home", id);
@@ -85,9 +90,24 @@ class BillText extends React.Component {
       this.setState({ backgroundColor: color });
     };
 
-    render() {
 
-  
+    textToSpeech() {
+      let self = this;
+        const speech = new Speech() // will throw an exception if not browser supported
+        if(speech.hasBrowserSupport()) { // returns a boolean
+            console.log("speech synthesis supported")
+        }
+        // console.log(document.getElementById('billtext'));
+        speech.speak({
+            text: window.atob(this.state.data),
+        }).then(() => {
+            console.log("Success !")
+        }).catch(e => {
+            console.error("An error occurred :", e)
+        })
+    }
+
+    render() {
       return (
         
            <div className="wrapper">
@@ -107,11 +127,18 @@ class BillText extends React.Component {
                   <CardHeader>
                     <CardTitle tag="h4" className="float-left">Bill Text</CardTitle>
                   </CardHeader>
-                  <CardBody md="12">
-                    {ReactHtmlParser(atob(this.state.data))}
-                 </CardBody>
+                  <CardBody>
+                      <div className ="clearfix" >
+                        <div id = "billtext">
+                          <div className="float-left" id = "billtext" dangerouslySetInnerHTML= {{ __html: window.atob(this.state.data) }} />
+                        </div>
+                        <button className="btn btn-danger"
+                              outline
+                              size="sm" onClick={this.textToSpeech}><i className="nc-icon nc-button-play" /></button>
+                      </div>
+                  </CardBody>
                 </Card>
-
+ 
               </div>
              {/* End */}
              <Footer fluid />
