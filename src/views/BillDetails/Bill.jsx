@@ -33,7 +33,7 @@ let serverURL = 'http://localhost:5000/';
 class Bills extends React.Component {
     constructor(props){
       super(props);
-      const { id } = this.props.location.state
+   //   const { id } = this.props.location.state
       this.state={
           data : [],
           id: this.props.location.state.id,
@@ -78,8 +78,8 @@ class Bills extends React.Component {
         billId: this.state.id
       }
 
-      let arr =[];
-      arr = this.state.comments.concat(comment);
+    //  let arr =[];
+     // arr = this.state.comments? this.state.comments.concat(comment): arr.push(comment);
 
       if(payload.comment) {
         console.log("Payload", payload);
@@ -87,10 +87,29 @@ class Bills extends React.Component {
                 .then(function (response) {
                    if(response.data.statusCode == 200)
                    {
-                     self.setState({ 
-                        comments : arr
-                      }, () => {
-                      });
+                     // self.setState({ 
+                     //    comments : arr
+                     //  }, () => {
+                     //  });
+
+                     axios.post(serverURL + 'bill/getComments',payload)
+                      .then(function (response) {
+                         console.log(response);
+                         if(response.data.statusCode == 200)
+                         {
+                            self.setState({ 
+                              comments :response.data.comments,
+                            });
+                         }
+                         else{
+                          console.log("fail");
+                         }
+
+                       })
+                      .catch(function (error) {
+                         console.log(error);
+                       });
+
                      
                    }
                    else{

@@ -20,26 +20,26 @@ class BillsHome extends React.Component {
   constructor(props){
     super(props)
     this.state={
-      data : []
-        // data : sessionStorage.org.bills
+      //data : []
+      data : JSON.parse(sessionStorage.org).bills
     }
     // this.handleBillClick = this.handleBillClick.bind(this);
   }
 
-  componentDidMount(){
-    let self = this;
-    axios.get("https://api.legiscan.com/?key=B36e51861aaf4e8d544f86c1ce66fe98&op=getMasterList&state=CA")
-    .then(response => {
-      console.log(response.data.masterlist);
-      self.setState({isLoaded : true, data:response.data.masterlist});
+  // componentDidMount(){
+  //   let self = this;
+  //   axios.get("https://api.legiscan.com/?key=B36e51861aaf4e8d544f86c1ce66fe98&op=getMasterList&state=CA")
+  //   .then(response => {
+  //     console.log(response.data.masterlist);
+  //     self.setState({isLoaded : true, data:response.data.masterlist}, ()=>console.log(self.state.data));
 
-    })
-    .catch(error => {
-      console.log(error);
-    });
-  }
+  //   })
+  //   .catch(error => {
+  //     console.log(error);
+  //   });
+  // }
   
-  render() {
+  render() {  
 
     const CardList = ({ data }) => {
       const cardsArray = Object.keys(data).map(value => (

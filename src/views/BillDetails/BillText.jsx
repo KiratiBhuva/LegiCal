@@ -1,14 +1,11 @@
 import React from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-// javascript plugin used to create scrollbars on windows
 import PerfectScrollbar from "perfect-scrollbar";
 import { Route, Switch } from "react-router-dom";
-// import { atob } from "atob";
 import {decode as atob, encode as btoa} from 'base-64';
 import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
 import Speech from "speak-tts";
-
 import DemoNavbar from "components/Navbars/DemoNavbar.jsx";
 import Footer from "components/Footer/Footer.jsx";
 import Sidebar from "components/Sidebar/Sidebar.jsx";
@@ -17,7 +14,6 @@ import History from "./BillHistory.jsx";
 import Rollcall from "./Rollcall.jsx";
 import Sponsers from "./Sponsers.jsx";
 import StatusInfo from "./StatusInfo.jsx";
-// import { Base64 } from 'js-base64';
 
 import {
   Card,

@@ -12,6 +12,7 @@ class Comments  extends React.Component {
 
   render() {
     let data = this.props.data;
+    console.log(data);
     const commentsArray = data  && data.map(value => (
         <Row  className="clearfix">
             <Col sm="3" md = "3" lg="3">{value.commentedby}</Col>

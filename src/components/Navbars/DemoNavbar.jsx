@@ -108,8 +108,10 @@ class Header extends React.Component {
       }
       return null;
     });
-    let user = JSON.parse(sessionStorage.user).email;
-    brandName = 'Welcome, '+ user.split('@')[0];
+    if(sessionStorage.user) {
+      let user = JSON.parse(sessionStorage.user).email;
+      brandName = 'Welcome, '+ user.split('@')[0];
+    }
     return brandName;
   }
   openSidebar() {

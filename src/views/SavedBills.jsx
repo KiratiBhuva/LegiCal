@@ -16,11 +16,13 @@ import {
   Col
 } from "reactstrap";
 
+let serverURL = 'http://localhost:5000/';
+
 class SavedBills extends React.Component {
   constructor(props){
     super(props)
     this.state={
-        data : sessionStorage.user.savedbills
+        data : []
     }
     // this.handleBillClick = this.handleBillClick.bind(this);
   }
@@ -38,23 +40,49 @@ class SavedBills extends React.Component {
   //   });
   // }
 
-  render() {
 
-    const CardList = ({ data }) => {
-      const cardsArray = Object.keys(data).map(value => (
+componentWillMount () {
+
+let email = JSON.parse(sessionStorage.user).email;
+let self = this;
+axios.get(serverURL + 'user/getSavedBills/'+ email)
+                .then(function (response) {
+                 //  console.log(response);
+                   if(response.data.statusCode == 200)
+                   {
+                      self.setState({ 
+                        data :response.data.savedbills,
+                      }, ()=>{});
+                   }
+                   else{
+                    console.log("fail");
+                   }
+
+                 })
+                .catch(function (error) {
+                   console.log(error);
+       });
+
+
+}
+  render() {
+    
+   // console.log("Data", this.state.data);
+    const CardList = ({data}) => {
+      const cardsArray = data.map(value => (
 
             <tbody>
-              <tr key = {data[value].bill_id}>
+              <tr key = {value.bill_id}>
                 <td><Link to={{
                           pathname: "/bill",
                           state: {
-                            id: data[value].bill_id,
-                            bill: data[value]
+                            id: value.bill_id,
+                            bill: value
                           }
-                }}>{data[value].number}</Link></td>
-                <td>{data[value].title}</td>
-                <td>{data[value].description}</td>
-                <td >{Status[data[value].status]}</td>
+                }}>{value.number}</Link></td>
+                <td>{value.title}</td>
+                <td>{value.description}</td>
+                <td >{Status[value.status]}</td>
               </tr>
             </tbody>
 
@@ -90,7 +118,7 @@ class SavedBills extends React.Component {
         <div className="content">
           <Row>
             <Col md="12">
-              <CardList data={org.bills} />
+              <CardList data={this.state.data} />
             </Col>
           </Row>
         </div>
